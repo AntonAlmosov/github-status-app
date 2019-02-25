@@ -5,28 +5,35 @@ import './../styles/style.scss' //Main stylesheet file
 import UserSearch from './UserSearch'
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super()
 
-    this.state={
-      user: ''
+    this.state = {
+      userStats: {},
     }
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.userStats)
   }
 
   render() {
     return (
       <div className='github-stats-app'>
-        <UserSearch onChange={this.inputHandle}/>
-        <p>{this.state.user}</p>
+        <UserSearch onChange={this.inputHandle} />
+        <p></p>
       </div>
     );
   }
 
   inputHandle = (e) => {
-    if(e.target.value.length > 19)
-      this.setState({
-        user: e.target.value.slice(19)
-      })
+    if (e.target.value.length > 19) {
+      fetch('https://api.github.com/users/' + e.target.value.slice(19))
+        .then(results => results.json()).then(data =>
+          this.setState({
+                userStats: data
+              }))
+    }
   }
 
 }
