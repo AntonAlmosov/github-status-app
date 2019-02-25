@@ -10,22 +10,18 @@ class App extends Component {
     super()
 
     this.state = {
-      found: true,
+      found: '',
       userData: {
 
       }
     }
   }
 
-  componentDidUpdate() {
-    console.log(this.state.userStats)
-  }
-
   render() {
     return (
       <div className='github-stats-app'>
         <UserSearch onChange={this.inputHandle} />
-        <UserStats userStats={this.state.userStats} />
+        <UserStats found={this.state.found} userData={this.state.userData} />
       </div>
     );
   }
@@ -41,6 +37,14 @@ class App extends Component {
     if (data.message === "Not Found")
       this.setState({
         found: false
+      })
+    else
+      this.setState({
+        found: true,
+        userData: {
+          name: data.name,
+          avatar: data.avatar_url
+        }
       })
   }
 
