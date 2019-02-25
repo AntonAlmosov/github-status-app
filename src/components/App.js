@@ -13,10 +13,7 @@ class App extends Component {
     this.state = {
       token: '?access_token=' + token,
       found: '',
-      userData: {
-
-      },
-      repos: 0
+      userData: {}
     }
   }
 
@@ -36,12 +33,6 @@ class App extends Component {
     }
   }
 
-  objectLenParser = (obj) => {
-    this.setState({
-      repos: Object.keys(obj).length
-    })
-  }
-
   githubDataParser = (data) => {
     if (data.message === "Not Found")
       this.setState({
@@ -50,14 +41,8 @@ class App extends Component {
     else{
       this.setState({
         found: true,
-        userData: {
-          name: data.name,
-          avatar: data.avatar_url
-        }
-      })
-      fetch(data.url + '/repos')
-        .then(results => results.json()).then(obj =>
-          this.objectLenParser(obj))
+        userData: data
+        })
     }
   }
 
