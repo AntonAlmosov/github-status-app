@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import token from './oauthtoken'
 import './../styles/style.scss' //Main stylesheet file
 
 //Components
@@ -10,6 +11,7 @@ class App extends Component {
     super()
 
     this.state = {
+      token: '?access_token=' + token,
       found: '',
       userData: {
 
@@ -29,12 +31,12 @@ class App extends Component {
 
   inputHandle = (e) => {
     if (e.target.value.length > 19) {
-      fetch('https://api.github.com/users/' + e.target.value.slice(19))
+      fetch('https://api.github.com/users/' + e.target.value.slice(19) + this.state.token)
         .then(results => results.json()).then(data => this.githubDataParser(data))
     }
   }
 
-  reposParser = (obj) => {
+  objectLenParser = (obj) => {
     this.setState({
       repos: Object.keys(obj).length
     })
@@ -55,7 +57,7 @@ class App extends Component {
       })
       fetch(data.url + '/repos')
         .then(results => results.json()).then(obj =>
-          this.reposParser(obj))
+          this.objectLenParser(obj))
     }
   }
 
