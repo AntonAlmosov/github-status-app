@@ -25,7 +25,10 @@
     }
 
     .user-stats-cards{
+      width: 80%;
       margin: 20px;
+      display: flex;
+      justify-content: space-between;
       .user-stats-card{
         width: 100px;
         height: 100px;
