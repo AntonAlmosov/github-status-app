@@ -1,0 +1,37 @@
+.user-stats-wrapper{
+  width: 1024px;
+  margin: 50px auto;
+  .user-stats-notfound p{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+  }
+
+  .user-stats{
+    display: flex;
+    width: 100%;
+    .user-info{
+      width: 20%;
+      display: flex;
+      flex-flow: column;
+      img {
+        width: 204px;
+        height: 204px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 18px;
+      }
+    }
+
+    .user-stats-cards{
+      margin: 20px;
+      .user-stats-card{
+        width: 100px;
+        height: 100px;
+        padding: 20px;
+        text-align: center;
+      }
+    }
+  }
+}

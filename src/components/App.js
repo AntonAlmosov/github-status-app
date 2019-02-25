@@ -13,7 +13,8 @@ class App extends Component {
       found: '',
       userData: {
 
-      }
+      },
+      repos: 0
     }
   }
 
@@ -21,7 +22,7 @@ class App extends Component {
     return (
       <div className='github-stats-app'>
         <UserSearch onChange={this.inputHandle} />
-        <UserStats found={this.state.found} userData={this.state.userData} />
+        <UserStats found={this.state.found} userData={this.state.userData} repos={this.state.repos}/>
       </div>
     );
   }
@@ -33,12 +34,18 @@ class App extends Component {
     }
   }
 
+  reposParser = (obj) => {
+    this.setState({
+      repos: Object.keys(obj).length
+    })
+  }
+
   githubDataParser = (data) => {
     if (data.message === "Not Found")
       this.setState({
         found: false
       })
-    else
+    else{
       this.setState({
         found: true,
         userData: {
@@ -46,6 +53,10 @@ class App extends Component {
           avatar: data.avatar_url
         }
       })
+      fetch(data.url + '/repos')
+        .then(results => results.json()).then(obj =>
+          this.reposParser(obj))
+    }
   }
 
 }
