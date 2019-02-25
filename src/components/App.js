@@ -3,13 +3,17 @@ import './../styles/style.scss' //Main stylesheet file
 
 //Components
 import UserSearch from './UserSearch'
+import UserStats from './UserStats'
 
 class App extends Component {
   constructor() {
     super()
 
     this.state = {
-      userStats: {},
+      found: true,
+      userData: {
+
+      }
     }
   }
 
@@ -21,7 +25,7 @@ class App extends Component {
     return (
       <div className='github-stats-app'>
         <UserSearch onChange={this.inputHandle} />
-        <p></p>
+        <UserStats userStats={this.state.userStats} />
       </div>
     );
   }
@@ -29,11 +33,15 @@ class App extends Component {
   inputHandle = (e) => {
     if (e.target.value.length > 19) {
       fetch('https://api.github.com/users/' + e.target.value.slice(19))
-        .then(results => results.json()).then(data =>
-          this.setState({
-                userStats: data
-              }))
+        .then(results => results.json()).then(data => this.githubDataParser(data))
     }
+  }
+
+  githubDataParser = (data) => {
+    if (data.message === "Not Found")
+      this.setState({
+        found: false
+      })
   }
 
 }
